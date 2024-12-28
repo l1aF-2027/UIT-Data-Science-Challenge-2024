@@ -25,20 +25,20 @@ st.set_page_config(
     page_title="Multimodal Sarcasm Detection on Vietnamese Social Media Texts",
     page_icon=":material/group:"
 )
-st.markdown(
-    f"""
-    <style>
-    /* Remove default header and manage app button */
-    .stApp [data-testid="stHeader"]{{
-        display:none;
-    }}
-    .stApp [data-testid="manage-app-button"]{{
-        display:none;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# st.markdown(
+#     f"""
+#     <style>
+#     /* Remove default header and manage app button */
+#     .stApp [data-testid="stHeader"]{{
+#         display:none;
+#     }}
+#     .stApp [data-testid="manage-app-button"]{{
+#         display:none;
+#     }}
+#     </style>
+#     """,
+#     unsafe_allow_html=True
+# )
 
 st.markdown(
     """
@@ -133,8 +133,8 @@ class CombinedSarcasmClassifier:
         self.model = None
         self.vit_processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224")
         self.vit_model = AutoModelForImageClassification.from_pretrained("google/vit-base-patch16-224")
-        self.jina_tokenizer = AutoTokenizer.from_pretrained("uitnlp/visobert")
-        self.jina_model = AutoModel.from_pretrained("uitnlp/visobert", 
+        self.jina_tokenizer = AutoTokenizer.from_pretrained("jinaai/jina-embeddings-v3")
+        self.jina_model = AutoModel.from_pretrained("jinaai/jina-embeddings-v3", 
                                                    trust_remote_code=True,
                                                    torch_dtype=torch.float32)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -163,7 +163,7 @@ class CombinedSarcasmClassifier:
         reverse_mapping = {v: k for k, v in self.label_mapping.items()}
         return [reverse_mapping[idx] for idx in numerical_labels]
 
-    def build(self, image_dim=2024, text_dim=1024):
+    def build(self, image_dim=2024, text_dim=768):
         image_input = Input(shape=(image_dim,), name='image_input')
         text_input = Input(shape=(text_dim,), name='text_input')
     
@@ -202,7 +202,7 @@ class CombinedSarcasmClassifier:
             temp = cv2.imread(images)
             inputs = self.vit_processor(images=temp, return_tensors="pt").to(self.device)
             with torch.no_grad():
-                        outputs = self.vit_model(**inputs)
+                outputs = self.vit_model(**inputs)
             image_features = outputs.logits.cpu().numpy().squeeze()
             text_feats = None
             try:
@@ -255,20 +255,17 @@ class CombinedSarcasmClassifier:
                     combined_text, 
                     return_tensors="pt", 
                     padding=True, 
-                    truncation=True, 
-                    max_length=512
+                    truncation=True
                 ).to(self.device)
                 
                 with torch.no_grad():
                     text_outputs = self.jina_model(**text_inputs)
                 text_feats = text_outputs.last_hidden_state.mean(dim=1).squeeze().cpu().numpy()
             except Exception as e:
-                text_feats = np.zeros(768)
+                text_feats = np.zeros(1024)
             # Concatenate image and text features
             combined_feature = np.concatenate([image_features, text_feats])
             combined_features.append(combined_feature)
-            
-            
         text_features = []
         print("\nProcessing texts:")
         if is_test == 1:
@@ -278,7 +275,6 @@ class CombinedSarcasmClassifier:
             features = outputs.last_hidden_state.mean(dim=1).squeeze().cpu().numpy()
             text_features.append(features)
 
-        print("\nPreprocessing completed!")
         return np.array(combined_features), np.array(text_features)
     @staticmethod
     @register_keras_serializable(package="Custom", name="f1_macro")
