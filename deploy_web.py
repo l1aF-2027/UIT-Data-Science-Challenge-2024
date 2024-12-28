@@ -492,8 +492,12 @@ def show_post(post, index=None, prediction=None):
     # Xác định màu và nhãn cho dự đoán
     if prediction == ['not-sarcasm']:
         prediction_label = '<span style="color: green; font-weight: bold;">Not Sarcasm</span>'
-    elif prediction == ['sarcasm']:
-        prediction_label = '<span style="color: red; font-weight: bold;">Sarcasm</span>'
+    elif prediction == ['image-sarcasm']:
+        prediction_label = '<span style="color: red; font-weight: bold;">Image Sarcasm</span>'
+    elif prediction == ['text-sarcasm']:
+        prediction_label = '<span style="color: red; font-weight: bold;">Text Sarcasm</span>'
+    elif prediction == ['multi-sarcasm']:
+        prediction_label = '<span style="color: red; font-weight: bold;">Multi Sarcasm</span>'
     else:
         prediction_label = ''  # Không hiển thị nếu prediction là None
     post['text'] = post['text'].replace('\n', '<br>')
