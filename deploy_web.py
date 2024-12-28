@@ -592,7 +592,7 @@ def display_post(post):
         )     
 if page == 'Main Posts':
     text = st.text_area(label = "Post text", placeholder="Write something here...", label_visibility="hidden")
-    if text and count_words(text) <= 256:
+    if text:
         image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"], label_visibility="collapsed")
         if image:
             if st.button("Post"):
