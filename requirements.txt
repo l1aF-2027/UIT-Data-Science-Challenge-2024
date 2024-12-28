@@ -1,1 +1,18 @@
 streamlit
+setuptools
+streamlit_option_menu
+tensorflow
+einops
+transformers
+keras
+torch
+opencv-python-headless==4.5.5.64
+tiktoken
+sentencepiece
+easyocr 
+paddleocr 
+paddlepaddle
+numpy<=1.26.0
+scikit-learn
+mmcv-full --no-binary mmcv-full
+albumentations
