@@ -10,9 +10,11 @@
 | Ha Huy Hoang     | 22520460   |
 | Nguyen Hoang Hiep   | 22520452   |
 
-<video width="320" height="240" controls>
-  <source src="./video/UIT-DSC-2024.mp4" type="video/mp4">
-</video>
+
+
+
+https://github.com/user-attachments/assets/b73dc315-4135-452f-b252-2307b1e94f17
+
 
 ### Project Structure
 1. **data:**  [ViMMSD Data](https://www.kaggle.com/datasets/hhhoang/vimmsd-dataset) - Include JSON files and folders containing images corresponding to 3 phases: train, dev (public test), and test (private test).
