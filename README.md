@@ -6,7 +6,7 @@
 | Nguyen Duy Hoang | 22520467   |
 | Ha Huy Hoang     | 22520460   |
 | Nguyen Hoang Hiep   | 22520452   |
-
+![1737469802367](image/README/1737469802367.png)
 ### Project Structure
 1. **data:**  Include JSON files and folders containing images corresponding to 3 phases: train, dev (public test), and test (private test).
 
@@ -22,7 +22,7 @@
    
 7. **deploy_web.py**: Python file containing code to deploy website using Streamlit framework
 
-8.  **requirements.txt**: Store necessary dependencies and requirements
+8. **requirements.txt**: Store necessary dependencies and requirements
 
 
 
