@@ -7,6 +7,25 @@
 | Ha Huy Hoang     | 22520460   |
 | Nguyen Hoang Hiep   | 22520452   |
 
+### Project Structure
+1. **data:**  Include JSON files and folders containing images corresponding to 3 phases: train, dev (public test), and test (private test).
+
+2. **model:** Contains two notebook files:
+   - ocr_text.ipynb - Code for OCR (Optical Character Recognition) to detect text in images
+   - main.ipynb - Main code for model training and prediction
+3. **approved_post.json, pending_posts.json, predictions.json:** Contains posts and their corresponding predicted values for approved posts, pending posts, and labeled posts.
+
+4. **model.keras**: Stores the model's architecture, weights, and parameters, allowing for model reusability, prediction, and deployment without retraining. 
+5. **report**: Contains files related to the report, including .tex, .pdf, and other resources.
+
+6. **slide**: Contains the slide presentation for the project.
+   
+7. **deploy_web.py**: Python file containing code to deploy website using Streamlit framework
+
+8.  **requirements.txt**: Store necessary dependencies and requirements
+
+
+
 ### How to run a deploy web file
 
 1. Install the requirements
