@@ -1,5 +1,7 @@
 # <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M40-272q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v32q0 33-23.5 56.5T600-160H120q-33 0-56.5-23.5T40-240v-32Zm800 112H738q11-18 16.5-38.5T760-240v-40q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v40q0 33-23.5 56.5T840-160ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z"/></svg> UIT Data Science Challenge 2024
 
+![image](https://github.com/user-attachments/assets/d372ff64-5f9b-4b6e-acc0-3049ca9b2225)
+
 [![video]([https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg](https://github.com/user-attachments/assets/d372ff64-5f9b-4b6e-acc0-3049ca9b2225))](https://youtu.be/lpsD2i-Zc-c)
 
 ### Members
@@ -9,7 +11,7 @@
 | Ha Huy Hoang     | 22520460   |
 | Nguyen Hoang Hiep   | 22520452   |
 
-![image](https://github.com/user-attachments/assets/d372ff64-5f9b-4b6e-acc0-3049ca9b2225)
+
 
 ### Project Structure
 1. **data:**  [ViMMSD Data](https://www.kaggle.com/datasets/hhhoang/vimmsd-dataset) - Include JSON files and folders containing images corresponding to 3 phases: train, dev (public test), and test (private test).
