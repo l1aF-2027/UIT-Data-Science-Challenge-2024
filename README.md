@@ -2,7 +2,7 @@
 
 ![image](https://github.com/user-attachments/assets/d372ff64-5f9b-4b6e-acc0-3049ca9b2225)
 
-![Video](https://img.youtube.com/vi/lpsD2i-Zc-c/maxresdefault.jpg)](https://youtu.be/lpsD2i-Zc-c)
+[![Video](https://img.youtube.com/vi/lpsD2i-Zc-c/maxresdefault.jpg)](https://youtu.be/lpsD2i-Zc-c)
 
 ### Members
 | Student Name     | Student ID |
