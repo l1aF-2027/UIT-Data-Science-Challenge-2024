@@ -20,25 +20,28 @@ from keras.saving import register_keras_serializable
 from paddleocr import PaddleOCR
 import easyocr
 import time
+import logging
+
+logging.basicConfig(level=logging.ERROR)
 #-----------------------------------------------------------------------------------------------------
 st.set_page_config(
     page_title="Multimodal Sarcasm Detection on Vietnamese Social Media Texts",
     page_icon=":material/group:"
 )
-# st.markdown(
-#     f"""
-#     <style>
-#     /* Remove default header and manage app button */
-#     .stApp [data-testid="stHeader"]{{
-#         display:none;
-#     }}
-#     .stApp [data-testid="manage-app-button"]{{
-#         display:none;
-#     }}
-#     </style>
-#     """,
-#     unsafe_allow_html=True
-# )
+st.markdown(
+    f"""
+    <style>
+    /* Remove default header and manage app button */
+    .stApp [data-testid="stHeader"]{{
+        display:none;
+    }}
+    .stApp [data-testid="manage-app-button"]{{
+        display:none;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown(
     """
@@ -102,8 +105,8 @@ st.markdown("""
 # Custom title with banner image and group name
 st.markdown(""" 
     <div class="banner-container">
-        <img class="banner-image" src="https://th.bing.com/th/id/R.e744d121c590fd637bb84012934c86b0?rik=TD%2fxuS7XyRr4Eg&pid=ImgRaw&r=0">
-        <div class="group-name">DHHH - UIT DSC 2024 - CS221</div>
+        <img class="banner-image" src="https://th.bing.com/th/id/OIP.H7M0FNk53OGh1LAVDCCwcQHaCz?rs=1&pid=ImgDetMain">
+        <div class="group-name">Nhóm 5 - Tư duy Trí tuệ nhân tạo - AI002.P11</div>
     </div>
 """, unsafe_allow_html=True)
 
@@ -395,8 +398,6 @@ class CombinedSarcasmClassifier:
 
     def summary(self):
         self.model.summary()
-    
-    
 #-----------------------------------------------------------------------------------------------------
 @st.cache_resource
 def load_combined_sarcasm_classifier():
@@ -474,9 +475,12 @@ def format_timestamp(timestamp):
 
 
 def encode_image(image_path):
-    with open(image_path, "rb") as img_file:
-        return base64.b64encode(img_file.read()).decode()
-
+    try:
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+    except Exception as e:
+        logging.error(f"File not found: {image_path}")
+        return None
 
 
 def show_post(post, index=None, prediction=None):
@@ -598,24 +602,27 @@ if page == 'Main Posts':
             img = Image.open(image)
             height, width = img.size
             print(img.size)
-            if st.button("Post"):
-                if image and text:
-                    # Save the uploaded image
-                    image_path = os.path.join(os.getcwd() + '/uploads', image.name)
-                    os.makedirs('uploads', exist_ok=True)
-                    with open(image_path, "wb") as f:
-                        f.write(image.getbuffer())
+            if height < 224 or width < 224:
+                st.error("Please upload an image with dimensions less than or equal to 224x224.")
+            else:
+                if st.button("Post"):
+                    if image and text:
+                        # Save the uploaded image
+                        image_path = os.path.join(os.getcwd() + '/uploads', image.name)
+                        os.makedirs('uploads', exist_ok=True)
+                        with open(image_path, "wb") as f:
+                            f.write(image.getbuffer())
 
-                    # Create post
-                    post = {
-                        "image": 'uploads/' + image.name,
-                        "text": text,
-                        "timestamp": str(datetime.now())
-                    }
-                    add_post(post)
-                    st.success("Your post has been submitted for review!")
-                else:
-                    st.error("Please upload an image and write text.")
+                        # Create post
+                        post = {
+                            "image": 'uploads/' + image.name,
+                            "text": text,
+                            "timestamp": str(datetime.now())
+                        }
+                        add_post(post)
+                        st.success("Your post has been submitted for review!")
+                    else:
+                        st.error("Please upload an image and write text.")
     elif count_words(text) > 256:
         st.error("The text must be less than or equal to 256 words.")
     if (len(st.session_state.approved_posts) > 0):
@@ -641,3 +648,5 @@ elif page == 'Review Posts':
                 save_prediction(post['image'], post['text'], prediction)
             show_post(post, index=i, prediction=prediction)
             st.markdown("---")
+            
+

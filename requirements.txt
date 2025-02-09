@@ -14,5 +14,5 @@ paddleocr
 paddlepaddle
 numpy<=1.26.0
 scikit-learn
-mmcv-full --no-binary mmcv-full
+mmcv-full
 albumentations
