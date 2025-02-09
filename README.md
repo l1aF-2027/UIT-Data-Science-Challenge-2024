@@ -10,9 +10,10 @@
 | Ha Huy Hoang     | 22520460   |
 | Nguyen Hoang Hiep   | 22520452   |
 
+### Algorithm Design
+![Picture1](https://github.com/user-attachments/assets/641a36fa-e4c3-48ab-adc5-5b74112cfe52)
 
-
-
+### Video Presentation
 https://github.com/user-attachments/assets/b73dc315-4135-452f-b252-2307b1e94f17
 
 
