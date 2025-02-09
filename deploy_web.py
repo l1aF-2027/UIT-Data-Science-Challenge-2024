@@ -250,7 +250,6 @@ class CombinedSarcasmClassifier:
                     recognized_texts.append(' '.join([text for (_, text, _) in recognized_text]))
         
                 combined_text = "\n".join(recognized_texts)
-                print(combined_text)
                 text_inputs = self.jina_tokenizer(
                     combined_text, 
                     return_tensors="pt", 
@@ -473,9 +472,12 @@ def format_timestamp(timestamp):
     dt = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')  # Parse string to datetime
     return dt.strftime('%H:%M, %d/%m/%Y')  # Format as Hour:Minute, Day/Month/Year
 
+
 def encode_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+
+
 
 def show_post(post, index=None, prediction=None):
     # Handle image source
@@ -536,9 +538,11 @@ def show_post(post, index=None, prediction=None):
         with col1:
             if st.button("✔", key=f"approve_{index}", help="Approve post"):
                 approve_post(index)
+                st.rerun()
         with col2:
             if st.button("✖", key=f"decline_{index}", help="Decline post"):
                 decline_post(index)
+                st.rerun()
 def count_words(input_string):
     cleaned_string = input_string.replace('\n', ' ')
     words = cleaned_string.split()
@@ -588,20 +592,23 @@ def display_post(post):
         )     
 if page == 'Main Posts':
     text = st.text_area(label = "Post text", placeholder="Write something here...", label_visibility="hidden")
-    if text:
+    if text and count_words(text) <= 256:
         image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"], label_visibility="collapsed")
         if image:
+            img = Image.open(image)
+            height, width = img.size
+            print(img.size)
             if st.button("Post"):
                 if image and text:
                     # Save the uploaded image
-                    image_path = os.path.join('uploads', image.name)
+                    image_path = os.path.join(os.getcwd() + '/uploads', image.name)
                     os.makedirs('uploads', exist_ok=True)
                     with open(image_path, "wb") as f:
                         f.write(image.getbuffer())
 
                     # Create post
                     post = {
-                        "image": image_path,
+                        "image": 'uploads/' + image.name,
                         "text": text,
                         "timestamp": str(datetime.now())
                     }
@@ -634,5 +641,3 @@ elif page == 'Review Posts':
                 save_prediction(post['image'], post['text'], prediction)
             show_post(post, index=i, prediction=prediction)
             st.markdown("---")
-            
-
